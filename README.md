@@ -150,7 +150,7 @@ This differs from the regular ``fetch()`` call in the following ways:
 
   - *The ``$error`` will only contain the most recent error during the call.*
   - *The ``$products`` will contain as many products as the ``fetchAll()`` call gathered.*
-  - *The ``$rawData`` object will only contain the data from the most last call before finishing.*
+  - *The ``$rawData`` object will only contain the data from the most recent call before finishing.*
 
 The $url should be created from the APIQueryBuilder which will handle building and inclusion of the API key. A custom
 url can be used if desired. Quick usage:
