@@ -1,6 +1,6 @@
 # Simple BestBuy API for PHP
 
-This is a simple high-level PHP client for the [Best Buy developer API](https://developer.bestbuy.com/).
+This is a simple high-level PHP package for the [Best Buy developer API](https://developer.bestbuy.com/).
 You will need an API key from BestBuy in order to access their API. [More information here.](https://bestbuyapis.github.io/api-documentation/#get-a-key)
 
 # Table of Contents
