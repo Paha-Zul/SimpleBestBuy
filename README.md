@@ -25,6 +25,7 @@ You will need an API key from BestBuy in order to access their API. [More inform
 ```PHP
 $options = new APIOptions(); # ProductOptions to pass into APIQueryBuilder for building a URL
 $options->restrictions = ProductOptions::salePrice()."<=29.99";
+$options->optionsToShow = [ProductOptions::sku(), ProductOptions::name(), ProductOptions::startDate()]
 
 # The API object
 $api = new BestBuyAPI();
@@ -40,6 +41,7 @@ if($results->error != "")
   handleError();
   
 # Using the products returns from the API call
+# By using the $options->optionsToShow above, each product will have $product->sku, $product->name, $product->startDate
 foreach($results->products as $product)
   doSomething();
 
@@ -99,12 +101,15 @@ Each class and usage is described below.
 ### ProductOptions
 The ProductOptions class contains around 400 static properties (accessed like ProductOptions::sku()) that
 correspond to the available properties from the BestBuyAPI. These are used to show parameters
-for the returned products or to refine searches. Quick usage:
+for the returned products or to refine searches. Each value corresponds exactly to how the API references them.
+ Quick usage:
 
 ```PHP
 $optionsToShow = [ProductOptions::sku(), ProductOptions::name(), ProductOptions::startDate()];
 $refineSearch = ProductOptions::salePrice."<=29.99";
 ```
+
+This will ultimately result in products with ``$sku``, ``$name``, and ``$startDate`` fields.
 
 ### APIOptions
 The APIOptions class holds data to be passed in to the APIQueryBuilder to generate a URL to pass into the
