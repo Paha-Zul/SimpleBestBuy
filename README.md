@@ -77,8 +77,7 @@ There are 2 ways to pull the release from github. The first is through cloning:
   Open a terminal in the directoy you wish to clone into and run
   ```git clone --depth 1 --branch 0.1-alpha https://github.com/Paha-Zul/SimpleBestBuy```
 
-Alternatively, you can use the release page to download the zip and extract it into your desired directly
-once the files are in place.
+Alternatively, you can use the release page to download the zip and extract it into your desired directory.
 
 
 ### API key
