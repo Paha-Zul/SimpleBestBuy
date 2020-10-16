@@ -1,6 +1,7 @@
 # Simple BestBuy API for PHP
 
 This is a simple high-level PHP client for the [Best Buy developer API](https://developer.bestbuy.com/).
+You will need an API key from BestBuy in order to access their API. [More information here.](https://bestbuyapis.github.io/api-documentation/#get-a-key)
 
 # Table of Contents
 1. [Quickstart](#quickstart)
@@ -8,12 +9,14 @@ This is a simple high-level PHP client for the [Best Buy developer API](https://
 4. [How to Install](#how-to-install)
     1. [Dependencies](#dependencies)
     2. [From github](#from-github)
+    3. [API Key](#api-key)
 5. [Usage](#usage)
     1. [ProductOptions](#productoptions)
     2. [APIOptions](#apioptions)
     3. [APIQueryBuilder]($apiquerybuilder)
     4. [BestBuyAPI](#bestbuyapi)
-6. [Roadmap](#roadmap)
+6. [Shortcomings](#shortcomings)
+7. [Roadmap](#roadmap)
 
 
 
@@ -45,17 +48,53 @@ $totalPageSize = $results->rawData->totalPages;
 ```
 
 # Introduction
-
+This is a small package I made for a personal project and very much a work in progress. I found it messy and hard
+to remember the options for the products of BestBuy's API. Therefore, I made a workflow to help make consistent API calls
+and a ProductOptions class that contains all of the options I could find. Hopefully in the future it will become more organized
+and I will implement the other missing features like categories, recommendations, etc.
 
 
 # How to install
+
 ### Dependencies
-spatie/enum: "^3
+Uses the [spatie/enum](https://github.com/spatie/enum) package for strongly typed enums in PHP. You can either open a terminal
+in your root directory and run 
+```composer require spatie/enum:^3.1``` 
+
+or alternatively you can open the ``composer.json`` file and include it there like so:
+```
+"require": {
+        "spatie/enum": "^3.1"
+    }
+```
+Then you must open a terminal and run ``composer install`` to install the package.
+  
 
 ### From github
+There are 2 ways to pull the release from github. The first is through cloning:
+  Open a terminal in the directoy you wish to clone into and run
+  ```git clone --depth 1 --branch 0.1-alpha https://github.com/Paha-Zul/SimpleBestBuy```
+
+Alternatively, you can use the release page to download the zip and extract it into your desired directly
+once the files are in place.
+
+
+### API key
+You will need an API key from BestBuy in order to access their API. [More information here.](https://bestbuyapis.github.io/api-documentation/#get-a-key)
+
+Once you have an API key for BestBuy, open ``api.json`` and insert the key. This will be inserted in the query during the URl building
+by the APIQueryBuilder class. 
+
+Make sure to add ``api.json`` to .gitignore so that it is not exposed if you decide to upload the project
+to github/gitlab/gitbucket or any other hosting site.
 
 
 # Usage
+The general workflow of this package is that values from ProductOption are loaded into a APIOptions container which are
+used in the APIQueryBuilder to generate a URL that is loaded into the BestBuyApi. So to sum it up:
+ProductOptions > APIOptions > APIQueryBuilder > BestBuyAPI->fetch/fetchAll.
+
+Each class and usage is described below.
 
 ### ProductOptions
 The ProductOptions class contains around 400 static properties (accessed like ProductOptions::sku()) that
@@ -85,6 +124,7 @@ $options = new APIOptions();
 $options->restrictions = ProductOptions::salePrice."<=29.99";
 $options->optionsToShow = [ProductOptions::sku(), ProductOptions::name(), ProductOptions::startDate()]
 
+# string URL built for calling from the products API
 $url = APIQueryBuilder::products($options);
 ```
 
@@ -134,6 +174,10 @@ foreach($results->products as $product)
 $totalPageSize = $results->rawData->totalPages;
 
 ```
+
+# Shortcomings
+Currently only the products API is supported. If other parts of the API are needed, a hand built URL can be passed into the BestBuyAPI functions
+to retrieve data.
 
 # Roadmap
 
